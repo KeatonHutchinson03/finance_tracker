@@ -7,15 +7,24 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
   </head>
 
   <body>
-    <div class="navbar-container">
-      <%= render 'layouts/navbar' %>
+    <%= render 'layouts/navbar' %>
+    <div class="container">
+      <% flash.each do |key, message| %>
+        <% bs_class = case key %>
+          <% when "notice" then "alert-success" %>
+          <% when "alert"  then "alert-danger" %>
+          <% else "alert-info" %>
+        <% end %>
+        <div class="alert <%= bs_class %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <%= yield %>
     </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
   </body>
 </html>
