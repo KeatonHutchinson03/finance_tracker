@@ -6,7 +6,11 @@ class Stock < ApplicationRecord
     quote_data = data[:quote]
     profile_data = data[:profile]
 
-    return nil if quote_data.blank? || quote_data['c'].nil?
+    # Detect invalid symbols
+    invalid_quote = quote_data.blank? || quote_data['c'].to_f <= 0
+    invalid_profile = profile_data.blank? || profile_data['name'].blank?
+
+    return nil if invalid_quote && invalid_profile
 
     stock = Stock.find_or_initialize_by(ticker: ticker_symbol.upcase)
     stock.last_price = quote_data['c']

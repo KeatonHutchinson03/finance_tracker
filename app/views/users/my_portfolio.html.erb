@@ -3,7 +3,7 @@
 <div class="search-area mb-4">
   <h3>Search Stocks</h3>
   
-  <%= form_tag "#", method: :get, local: true, class: "row g-3 align-items-end" do %>
+  <%= form_tag search_stock_path, method: :get, local: true, class: "row g-3 align-items-end" do %>
     <div class="col-sm-9 no-right-padding">
       <%= label_tag :stock, "Stock Symbol", class: "form-label" %>
       <%= text_field_tag :stock, params[:stock], class: "form-control form-control-lg", placeholder: "e.g. AAPL", autofocus: true %>
@@ -16,3 +16,15 @@
     </div>
   <% end %>
 </div>
+<% if @stock %>
+  <div class="card results-box mt-3">
+    <div class="card-header">
+      Stock Information
+    </div>
+    <div class="card-body">
+      <p><strong>Symbol:</strong> <%= @stock.ticker %></p>
+      <p><strong>Name:</strong> <%= @stock.name %></p>
+      <p><strong>Latest Price:</strong> $<%= @stock.last_price %></p>
+    </div>
+  </div>
+<% end %>
