@@ -4,13 +4,15 @@
   <h3>Search Stocks</h3>
   
   <%= form_tag "#", method: :get, local: true, class: "row g-3 align-items-end" do %>
-    <div class="col-sm-9">
+    <div class="col-sm-9 no-right-padding">
       <%= label_tag :stock, "Stock Symbol", class: "form-label" %>
       <%= text_field_tag :stock, params[:stock], class: "form-control form-control-lg", placeholder: "e.g. AAPL", autofocus: true %>
     </div>
 
-    <div class="col-sm-3">
-      <%= submit_tag "Lookup", class: "btn btn-primary btn-lg w-100" %>
+    <div class="col-sm-3 no-left-padding">
+      <%= button_tag type: :submit, class: "btn btn-success" do %>
+        <%= fa_icon "search" %>
+      <% end %>
     </div>
   <% end %>
 </div>

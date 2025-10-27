@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise', '~> 4.8'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'httparty'
+gem 'font-awesome-rails'
+gem 'bootstrap'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'dotenv-rails', groups: [:development, :test]
