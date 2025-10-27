@@ -5,12 +5,20 @@ class StocksController < ApplicationController
     if stock_symbol.present?
       @stock = Stock.new_lookup(stock_symbol)
       if @stock
-        render 'users/my_portfolio'
+        respond_to do |format|
+          format.js { render partial: 'users/result' }  # Renders result.js.erb for
+        end
       else
-        redirect_to my_portfolio_path, alert: "Stock symbol not found. Please try again."
+        respond_to do |format|
+          flash.now[:alert] = "Please enter a valid stock symbol."
+          format.js { render partial: 'users/result' }
+        end
       end
     else
-      redirect_to my_portfolio_path, alert: "Please enter a stock symbol."
+      respond_to do |format|
+          flash.now[:alert] = "Please enter a symbol to search."
+          format.js { render partial: 'users/result' }
+        end
     end
   end
 end

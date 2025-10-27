@@ -1,0 +1,15 @@
+<div class="results-box">
+    <%= render 'layouts/messages' %>
+</div>
+<% if @stock %>
+  <div class="card  mt-3">
+    <div class="card-header">
+      Stock Information
+    </div>
+    <div class="card-body d-inline-block">
+      <p><strong>Symbol:</strong> <%= @stock.ticker %></p>
+      <p><strong>Name:</strong> <%= @stock.name %></p>
+      <p><strong>Latest Price:</strong> $<%= @stock.last_price %></p>
+    </div>
+  </div>
+<% end %>
