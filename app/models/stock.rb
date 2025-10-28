@@ -20,11 +20,15 @@ class Stock < ApplicationRecord
     stock = Stock.find_or_initialize_by(ticker: ticker_symbol.upcase)
     stock.last_price = quote_data['c']
     stock.name = profile_data['name'] || ticker_symbol.upcase
-    stock.save!
+    
 
     stock
   rescue StandardError => e
     Rails.logger.error("Stock lookup error: #{e.message}")
     nil
+  end
+
+  def self.check_db(ticker_symbol)
+    where(ticker: ticker_symbol).first
   end
 end
