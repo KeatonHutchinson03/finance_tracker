@@ -2,7 +2,7 @@
     <%= render 'layouts/messages' %>
 </div>
 <% if @stock %>
-  <div class="card  mt-3">
+  <div class="card">
     <div class="card-header">
       Stock Information
     </div>
@@ -10,7 +10,18 @@
       <p><strong>Symbol:</strong> <%= @stock.ticker %></p>
       <p><strong>Name:</strong> <%= @stock.name %></p>
       <p><strong>Latest Price:</strong> $<%= @stock.last_price %></p>
-      <%= link_to "Add to Portfolio", user_stocks_path(user: current_user, ticker: @stock.ticker), method: :post, class: "btn btn-success btn-xs" %>
+      <% if current_user.can_track_stock?(@stock.ticker) %>
+        <%= link_to "Add to Portfolio", user_stocks_path(user: current_user, ticker: @stock.ticker), method: :post, class: "btn btn-success btn-xs" %>
+      <% else %>
+        <span class="badge bg-dark text-light">Already in portfolio
+        <% if !current_user.under_stock_limit? %>
+          - Stock Limit Reached
+        <% end %>
+        <% if current_user.stock_already_tracked?(@stock.ticker) %>
+          - Already Tracked
+        <% end %>
+        </span>
+      <% end %>
     </div>
   </div>
 <% end %>

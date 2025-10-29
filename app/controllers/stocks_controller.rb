@@ -4,6 +4,8 @@ class StocksController < ApplicationController
 
     if stock_symbol.present?
       @stock = Stock.new_lookup(stock_symbol)
+
+      #current_user.stocks.reload
       if @stock
         respond_to do |format|
           format.js { render partial: 'users/result' }  # Renders result.js.erb for
