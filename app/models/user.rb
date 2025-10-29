@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
+  has_many :friendships
+  has_many :friends, through: :friendships
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -28,4 +30,16 @@ class User < ApplicationRecord
       "Anonymous"
     end
   end
+
+  def self.search(param)
+    param.strip!
+    results = (matches("first_name", param) + matches("last_name", param) + matches("email", param)).uniq
+    return nil unless results
+    results
+  end
+
+  def self.matches(field_name, param)
+    where("#{field_name} like ?", "%#{param}%")
+  end
+
 end
